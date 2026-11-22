@@ -67,3 +67,36 @@ console.log(createCoursesOverview(coursesData));
 //   allHaveStudents: true,
 //   hasFreeCourse: false
 // }
+class Course {
+    #students;
+
+    constructor(courseInfo) {
+        this.title = courseInfo.title;
+        this.price = courseInfo.price;
+        this.#students = courseInfo.students;
+    }
+
+   enrollStudent() {
+this.#students += 1;
+}
+
+getStudentsCount() {
+return this.#students;
+}
+
+getInfo() {
+return `${this.title}: ${this.#students} студентів, ${this.price} грн`;
+}
+}
+
+const course = new Course({
+title: 'JavaScript Basics',
+price: 1200,
+students: 20,
+});
+
+course.enrollStudent();
+
+console.log(course.getStudentsCount());
+
+console.log(course.getInfo());
