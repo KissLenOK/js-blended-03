@@ -68,31 +68,31 @@ console.log(createCoursesOverview(coursesData));
 //   hasFreeCourse: false
 // }
 class Course {
-    #students;
+  #students;
 
-    constructor(courseInfo) {
-        this.title = courseInfo.title;
-        this.price = courseInfo.price;
-        this.#students = courseInfo.students;
-    }
+  constructor(courseInfo) {
+    this.title = courseInfo.title;
+    this.price = courseInfo.price;
+    this.#students = courseInfo.students;
+  }
 
-   enrollStudent() {
-this.#students += 1;
-}
+  enrollStudent() {
+    this.#students += 1;
+  }
 
-getStudentsCount() {
-return this.#students;
-}
+  getStudentsCount() {
+    return this.#students;
+  }
 
-getInfo() {
-return `${this.title}: ${this.#students} студентів, ${this.price} грн`;
-}
+  getInfo() {
+    return `${this.title}: ${this.#students} студентів, ${this.price} грн`;
+  }
 }
 
 const course = new Course({
-title: 'JavaScript Basics',
-price: 1200,
-students: 20,
+  title: 'JavaScript Basics',
+  price: 1200,
+  students: 20,
 });
 
 course.enrollStudent();
@@ -100,3 +100,47 @@ course.enrollStudent();
 console.log(course.getStudentsCount());
 
 console.log(course.getInfo());
+
+// Створіть клас CourseCatalog. Його конструктор отримує масив courses.
+
+// Клас повинен містити приватну властивість #courses.
+
+// У конструкторі:
+
+// отримайте активні курси за допомогою getActiveCourses();
+// перетворіть їх через map() на екземпляри класу Course;
+// збережіть отриманий масив у #courses.
+
+// Додайте методи:
+
+// addCourse(course) — додає готовий екземпляр курсу до каталогу;
+// findCourse(title) — знаходить курс за точною назвою через find() і повертає його або null;
+// getTotalPotentialIncome() — через reduce() повертає загальну потенційну суму: price * кількість студентів для кожного курсу.
+
+class CourseCatalog {
+  #courses;
+  constructor(courses) {
+    this.#courses = getActiveCourses(courses).map(course => new Course(course));
+  }
+  addCourse(course) {
+    this.#courses.push(course);
+  }
+
+  findCourse(title) {
+    return this.#courses.find(course => course.title === title) || null;
+  }
+
+  getTotalPotentialIncome() {
+    return this.#courses.reduce(
+      (acc, course) => acc + course.price * course.getStudentsCount(),
+      0
+    );
+  }
+}
+
+const catalog = new CourseCatalog(coursesData);
+
+console.log(catalog.findCourse('HTML & CSS').getInfo());
+// HTML & CSS: 25 студентів, 900 грн
+
+console.log(catalog.getTotalPotentialIncome()); // 46500
