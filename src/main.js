@@ -20,3 +20,50 @@ const coursesData = [
 ];
 
 const getActiveCourses = courses => courses.filter(course => course.isActive);
+console.log(getActiveCourses(coursesData));
+// [
+//   {
+//     title: 'JavaScript Basics',
+//     price: 1200,
+//     students: 20,
+//     isActive: true
+//   },
+//   {
+//     title: 'HTML & CSS',
+//     price: 900,
+//     students: 25,
+//     isActive: true
+//   }
+// ]
+/*Створіть функцію createCoursesOverview(courses). Спочатку вона повинна отримати активні курси через getActiveCourses() з першого етапу.
+
+
+
+Поверніть об’єкт із властивостями:
+
+titles — масив рядків активних курсів у форматі HTML & CSS — 900 грн. Перед форматуванням відсортуйте новий масив курсів за зростанням ціни;
+totalStudents — загальна кількість студентів на активних курсах, обчислена через reduce();
+allHaveStudents — результат перевірки, чи всі активні курси мають хоча б одного студента;
+hasFreeCourse — результат перевірки, чи є серед активних курсів безплатний курс, тобто його ціна = 0.
+*/
+const createCoursesOverview = courses => {
+  const activeCourses = getActiveCourses(courses);
+  const titles = activeCourses
+    .toSorted((a, b) => a.price - b.price)
+    .map(course => `${course.title} — ${course.price} грн.`);
+  const totalStudents = activeCourses.reduce(
+    (acc, course) => acc + course.students,
+    0
+  );
+  const allHaveStudents = activeCourses.every(course => course.students > 0);
+  const hasFreeCourse = activeCourses.some(course => course.price === 0);
+  return { titles, totalStudents, allHaveStudents, hasFreeCourse };
+};
+
+console.log(createCoursesOverview(coursesData));
+// {
+//   titles: ['HTML & CSS — 900 грн', 'JavaScript Basics — 1200 грн'],
+//   totalStudents: 45,
+//   allHaveStudents: true,
+//   hasFreeCourse: false
+// }
