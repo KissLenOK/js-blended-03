@@ -85,7 +85,7 @@ return this.#students;
 }
 
 getInfo() {
-return ${this.title}: ${this.#students} студентів, ${this.price} грн;
+return `${this.title}: ${this.#students} студентів, ${this.price} грн`;
 }
 }
 
