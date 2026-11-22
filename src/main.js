@@ -144,3 +144,40 @@ console.log(catalog.findCourse('HTML & CSS').getInfo());
 // HTML & CSS: 25 студентів, 900 грн
 
 console.log(catalog.getTotalPotentialIncome()); // 46500
+
+/* Етап 5 — Преміумкурс
+
+Створіть клас PremiumCourse, який наслідує Course.
+
+Конструктор отримує один об’єкт із властивостями title, price, students і mentor. Передайте спільні дані конструктору батьківського класу через super(), а mentor збережіть як публічну властивість.
+
+Перевизначте метод getInfo(). Він повинен викликати батьківський метод через super.getInfo() і додати ім’я ментора: 
+Advanced JavaScript: 10 студентів, 2500 грн. Ментор: Ірина
+
+Створіть преміумкурс і додайте його до catalog методом addCourse() з попереднього етапу.
+*/
+
+class PremiumCourse extends Course {
+  constructor(course) {
+    super(course);
+    this.mentor = course.mentor;
+  }
+
+  getInfo() {
+    return `${super.getInfo()} Ментор: ${this.mentor}`;
+  }
+}
+
+const premiumCourse = new PremiumCourse({
+  title: 'Advanced JavaScript',
+  price: 2500,
+  students: 10,
+  mentor: 'Ірина',
+});
+
+catalog.addCourse(premiumCourse);
+
+console.log(catalog.findCourse('Advanced JavaScript').getInfo());
+// Advanced JavaScript: 10 студентів, 2500 грн. Ментор: Ірина
+
+console.log(catalog.getTotalPotentialIncome()); // 71500
